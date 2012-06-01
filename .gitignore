@@ -1,4 +1,7 @@
 *.class
+*.settings
+*.classpath
+*.project
 
 # Package Files #
 *.jar
@@ -8,4 +11,5 @@
 
 target/
 
-
+#Do not post company defaults to a public repo
+src/main/resources/companyDefaults/*
