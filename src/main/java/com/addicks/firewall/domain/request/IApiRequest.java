@@ -4,4 +4,5 @@ public interface IApiRequest {
 
   String getURL();
 
+  Class<?> getResponseClass();
 }
