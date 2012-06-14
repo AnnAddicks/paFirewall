@@ -1,7 +1,5 @@
 package com.addicks.firewall;
 
-import org.springframework.scheduling.annotation.Scheduled;
-
 import com.addicks.firewall.manager.IResetRulesService;
 
 public class ServiceScheduler {
@@ -22,7 +20,7 @@ public class ServiceScheduler {
   /**
    * Run this service at 7am on Mondays
    */
-  @Scheduled(cron = "0 0 7 * * MON")
+  // @Scheduled(cron = "0 0 7 * * MON")
   public static final void withdrawWeekly() {
     resetRulesService.resetRules();
   }

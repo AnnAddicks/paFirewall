@@ -1,0 +1,28 @@
+apply plugin: "maven"
+
+configurations {
+  deployerJars
+}
+
+repositories {
+    mavenRepo urls: "http://www.eclipse.org/downloads/download.php?r=1&amp;nf=1&amp;file=/rt/eclipselink/maven.repo"
+}
+
+dependencies {
+
+  //Compile time dependencies
+  compile "org.apache.httpcomponents:httpclient:4.2"
+  compile "org.eclipse.persistence:eclipselink:2.3.2"
+  compile "hsqldb:hsqldb:1.8.0.10"
+  compile "com.google.inject:guice:3.0"
+
+  //Runtime only dependencies
+
+
+  //Test only dependencies
+  testCompile "junit:junit:4.9"
+
+  //Deployments
+  deployerJars "org.apache.maven.wagon:wagon-http:1.0-beta-2"
+
+}
