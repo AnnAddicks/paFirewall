@@ -18,5 +18,6 @@ public class GetRuleResponseTest {
         .openStream();
 
     System.out.println(JAXBUtilities.getResponse(GetRuleResponse.class, resultStream));
+    // TODO add asserts
   }
 }

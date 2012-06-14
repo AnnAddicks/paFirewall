@@ -1,11 +1,17 @@
 apply plugin: "maven"
+apply plugin: "java"
+apply plugin: "eclipse"
+apply plugin: "idea"
 
 configurations {
   deployerJars
 }
 
 repositories {
-    mavenRepo urls: "http://www.eclipse.org/downloads/download.php?r=1&amp;nf=1&amp;file=/rt/eclipselink/maven.repo"
+   mavenCentral()
+   maven {
+      url "http://www.eclipse.org/downloads/download.php?r=1&nf=1&file=/rt/eclipselink/maven.repo"
+    }
 }
 
 dependencies {
