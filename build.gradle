@@ -22,8 +22,9 @@ dependencies {
   compile "hsqldb:hsqldb:1.8.0.10"
   compile "com.google.inject:guice:3.0"
 
-  //Runtime only dependencies
 
+  //Runtime only dependencies
+  runtime "org.hibernate:hibernate-core:4.1.3.Final"
 
   //Test only dependencies
   testCompile "junit:junit:4.9"

@@ -21,7 +21,7 @@ public class ServiceScheduler {
   public static final void main(String[] args) {
     Module propertiesMoudule = new PropertiesModule();
     Injector injector = Guice.createInjector(propertiesMoudule);
-
+    System.out.println(injector.getAllBindings());
     // Create a new injections
     IResetRulesService resetRulesService = injector.getInstance(ResetRulesService.class);
 

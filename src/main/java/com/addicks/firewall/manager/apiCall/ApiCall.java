@@ -15,21 +15,29 @@ import com.addicks.firewall.domain.request.KeyGenRequest;
 import com.addicks.firewall.domain.response.ApiKeyResponse;
 import com.addicks.firewall.domain.response.IApiResponse;
 import com.addicks.firewall.utilities.JAXBUtilities;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 public class ApiCall implements IApiCall {
-  private static final String FIREWALL_IP = "https://168.21.68.2";
+
+  private String firewallIp;
 
   private static final String API = "/api/?";
 
+  @Inject
+  public ApiCall(@Named("firewallIp") String firewall_IP) {
+    firewallIp = firewall_IP;
+  }
+
   public IApiResponse execute(IApiRequest request) {
-    String url = FIREWALL_IP + API + "key=" + getKey() + request.getURL();
+    String url = "https://" + firewallIp + API + "key=" + getKey() + request.getURL();
 
     IApiResponse response = sendRequest(url, request);
     return response;
   }
 
   private String getKey() {
-    String url = FIREWALL_IP + API + "type=keygen&user=admin&password=R%40z0rR0ck3r&";
+    String url = "https://" + firewallIp + API + "type=keygen&user=admin&password=R%40z0rR0ck3r&";
     ApiKeyResponse response = (ApiKeyResponse) sendRequest(url, new KeyGenRequest());
 
     if (response != null) {

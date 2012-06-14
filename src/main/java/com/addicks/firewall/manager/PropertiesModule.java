@@ -11,7 +11,8 @@ public class PropertiesModule extends AbstractModule {
   public void configure() {
     Properties properties = new Properties();
     try {
-      FileInputStream fis = new FileInputStream("/companyDefaults/wareCounty.properties");
+      FileInputStream fis = new FileInputStream(
+          "src/main/resources/companyDefaults/wareCounty.properties");
 
       properties.load(fis);
 
