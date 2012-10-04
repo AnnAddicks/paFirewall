@@ -50,6 +50,12 @@ public class ApiCall implements IApiCall {
     }
   }
 
+  @Override
+  public List<Rule> resetRules(List<Rule> rules) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
   private String getKey() {
     if (key == null) {
       IApiRequest keyRequest = new KeyGenRequest(username, password);

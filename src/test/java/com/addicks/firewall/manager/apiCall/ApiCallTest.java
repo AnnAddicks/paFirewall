@@ -16,8 +16,6 @@ public class ApiCallTest {
   public void setUp() throws Exception {
     InputStream in = Thread.currentThread().getContextClassLoader()
         .getResourceAsStream("homeApp.properties");
-
-    System.out.println(in);
     Properties prop = new Properties();
     prop.load(in);
 

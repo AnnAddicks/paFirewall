@@ -23,6 +23,11 @@ import com.addicks.firewall.domain.request.IApiRequest;
 import com.addicks.firewall.domain.response.IApiResponse;
 import com.addicks.firewall.utilities.JAXBUtilities;
 
+/**
+ * Most of the pa firewalls that are setup are not signed or self-signed. We are
+ * going to by default trust them.
+ * 
+ */
 public class UnsignedSSLClient implements ISSLClient {
 
   public UnsignedSSLClient() {

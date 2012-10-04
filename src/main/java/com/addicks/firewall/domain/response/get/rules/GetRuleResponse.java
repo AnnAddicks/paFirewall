@@ -16,7 +16,7 @@ import com.addicks.firewall.domain.response.IApiResponse;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GetRuleResponse implements IApiResponse {
 
-  @XmlPath("result/rulebase/security/rules/entry")
+  @XmlPath("result/rules/entry")
   private List<Rule> rules;
 
   public List<Rule> getRules() {
