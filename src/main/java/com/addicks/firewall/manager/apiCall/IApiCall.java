@@ -9,7 +9,4 @@ public interface IApiCall {
 
   IApiResponse execute(IApiRequest request);
 
-  Boolean undo();
-
-  Boolean commit();
 }

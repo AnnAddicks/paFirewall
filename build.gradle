@@ -17,7 +17,7 @@ repositories {
 dependencies {
 
   //Compile time dependencies
-  compile "org.apache.httpcomponents:httpclient:4.2"
+  compile "org.apache.httpcomponents:httpclient:4.2.1"
   compile "org.eclipse.persistence:eclipselink:2.3.2"
   compile "hsqldb:hsqldb:1.8.0.10"
   compile "com.google.inject:guice:3.0"

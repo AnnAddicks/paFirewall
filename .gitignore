@@ -13,4 +13,5 @@ bin/*
 target/
 
 #Do not post company defaults to a public repo
-src/main/resources/companyDefaults/*
+src/test/resources/companyDefaults/*
+src/main/resources/homeApp.properties
