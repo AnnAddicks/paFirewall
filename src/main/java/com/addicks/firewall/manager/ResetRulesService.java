@@ -18,16 +18,11 @@ public class ResetRulesService implements IResetRulesService {
 
   @Override
   public void resetRules() {
-    // TODO Auto-generated method stub
+    // Get all the rules and counts
+    List<Rule> rules = apiCall.getRules(new GetRuleRequest());
 
-    // 1. Get all the rules and counts
-    List<Rule> ruleResponse = apiCall.getRules(new GetRuleRequest());
-
-    // 3. rename all the rules
-
-    // 4. rename all the rules back
-
-    // 5. commit
+    // Rename all the rules
+    apiCall.resetRules(rules);
   }
 
 }

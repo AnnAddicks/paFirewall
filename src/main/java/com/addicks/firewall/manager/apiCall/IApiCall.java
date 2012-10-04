@@ -11,6 +11,6 @@ public interface IApiCall {
 
   List<Rule> getRules(IApiRequest request);
 
-  List<Rule> resetRules(List<Rule> rules);
+  void resetRules(List<Rule> rules);
 
 }
