@@ -1,12 +1,14 @@
 package com.addicks.firewall.manager.apiCall;
 
+import java.util.List;
+
 import com.addicks.firewall.domain.request.IApiRequest;
-import com.addicks.firewall.domain.response.IApiResponse;
+import com.addicks.firewall.domain.response.get.rules.Rule;
 import com.google.inject.ImplementedBy;
 
 @ImplementedBy(ApiCall.class)
 public interface IApiCall {
 
-  IApiResponse execute(IApiRequest request);
+  List<Rule> getRules(IApiRequest request);
 
 }

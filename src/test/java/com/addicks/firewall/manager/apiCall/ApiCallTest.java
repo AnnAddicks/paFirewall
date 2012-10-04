@@ -23,7 +23,8 @@ public class ApiCallTest {
 
     in.close();
 
-    apiCall = new ApiCall("10.10.42.72", prop.getProperty("username"), prop.getProperty("password"));
+    apiCall = new ApiCall(prop.getProperty("firewallIp"), prop.getProperty("username"),
+        prop.getProperty("password"));
   }
 
   public void tearDown() throws Exception {
@@ -32,6 +33,6 @@ public class ApiCallTest {
 
   @Test
   public final void testExecute() {
-    System.out.println(apiCall.execute(new GetRuleRequest()));
+    System.out.println(apiCall.getRules(new GetRuleRequest()));
   }
 }

@@ -1,29 +1,14 @@
 package com.addicks.firewall.manager.apiCall;
 
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-
-import javax.xml.bind.JAXBException;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.conn.ssl.TrustStrategy;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
+import java.util.Collections;
+import java.util.List;
 
 import com.addicks.firewall.domain.request.IApiRequest;
 import com.addicks.firewall.domain.request.KeyGenRequest;
 import com.addicks.firewall.domain.response.ApiKeyResponse;
 import com.addicks.firewall.domain.response.IApiResponse;
-import com.addicks.firewall.utilities.JAXBUtilities;
+import com.addicks.firewall.domain.response.get.rules.GetRuleResponse;
+import com.addicks.firewall.domain.response.get.rules.Rule;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
@@ -37,6 +22,8 @@ public class ApiCall implements IApiCall {
 
   private String key;
 
+  private ISSLClient client;
+
   private static final String API = "/api/?";
 
   @Inject
@@ -46,14 +33,21 @@ public class ApiCall implements IApiCall {
     this.username = username;
     this.password = password;
 
+    client = new UnsignedSSLClient();
     key = null;
   }
 
-  public IApiResponse execute(IApiRequest request) {
+  @Override
+  public List<Rule> getRules(IApiRequest request) {
     String url = "https://" + firewallIp + API + "key=" + getKey() + request.getURL();
 
-    IApiResponse response = sendRequest(url, request);
-    return response;
+    IApiResponse response = client.sendPostRequest(url, request);
+    if (response != null) {
+      return ((GetRuleResponse) response).getRules();
+    }
+    else {
+      return Collections.emptyList();
+    }
   }
 
   private String getKey() {
@@ -61,7 +55,7 @@ public class ApiCall implements IApiCall {
       IApiRequest keyRequest = new KeyGenRequest(username, password);
       String url = "https://" + firewallIp + API + keyRequest.getURL();
 
-      ApiKeyResponse response = (ApiKeyResponse) sendRequest(url, keyRequest);
+      ApiKeyResponse response = (ApiKeyResponse) client.sendPostRequest(url, keyRequest);
       if (response != null) {
         key = response.getKey();
       }
@@ -70,81 +64,4 @@ public class ApiCall implements IApiCall {
     return key;
   }
 
-  private IApiResponse sendRequest(String urlString, IApiRequest request) {
-
-    DefaultHttpClient httpclient = new DefaultHttpClient();
-    IApiResponse apiResponse = null;
-    try {
-      TrustStrategy strategy = new TrustStrategy() {
-        @Override
-        public boolean isTrusted(X509Certificate[] chain, String authType)
-            throws CertificateException {
-          // TODO Auto-generated method stub
-          return true;
-        }
-      };
-
-      SSLSocketFactory socketFactory = new SSLSocketFactory(strategy,
-          SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-      Scheme sch = new Scheme("https", 443, socketFactory);
-      httpclient.getConnectionManager().getSchemeRegistry().register(sch);
-
-      HttpPost httpPost = new HttpPost(
-          "https://10.10.42.72/api/?type=keygen&user=admin&password=BBekac42");
-
-      System.out.println("executing request" + httpPost.getRequestLine());
-
-      HttpResponse response = httpclient.execute(httpPost);
-      HttpEntity entity = response.getEntity();
-
-      System.out.println("----------------------------------------");
-      System.out.println(response.getStatusLine());
-      if (entity != null) {
-        System.out.println("Response content length: " + entity.getContentLength());
-      }
-
-      apiResponse = JAXBUtilities.getResponse(request.getResponseClass(), response.getEntity()
-          .getContent());
-
-      EntityUtils.consume(entity);
-
-    }
-    catch (IllegalStateException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (JAXBException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (KeyManagementException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (UnrecoverableKeyException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (NoSuchAlgorithmException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (KeyStoreException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    finally {
-      // When HttpClient instance is no longer needed,
-      // shut down the connection manager to ensure
-      // immediate deallocation of all system resources
-      httpclient.getConnectionManager().shutdown();
-    }
-
-    return apiResponse;
-
-  }
 }

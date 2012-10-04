@@ -1,6 +1,9 @@
 package com.addicks.firewall.manager;
 
+import java.util.List;
+
 import com.addicks.firewall.domain.request.GetRuleRequest;
+import com.addicks.firewall.domain.response.get.rules.Rule;
 import com.addicks.firewall.manager.apiCall.IApiCall;
 import com.google.inject.Inject;
 
@@ -18,9 +21,7 @@ public class ResetRulesService implements IResetRulesService {
     // TODO Auto-generated method stub
 
     // 1. Get all the rules and counts
-    apiCall.execute(new GetRuleRequest());
-
-    // 2. Save the current rules and count
+    List<Rule> ruleResponse = apiCall.getRules(new GetRuleRequest());
 
     // 3. rename all the rules
 
