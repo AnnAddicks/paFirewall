@@ -12,7 +12,7 @@ public class PropertiesModule extends AbstractModule {
     Properties properties = new Properties();
     try {
       FileInputStream fis = new FileInputStream(
-          "src/main/resources/companyDefaults/wareCounty.properties");
+          "src/main/resources/companyDefaults/homeApp.properties");
 
       properties.load(fis);
 
